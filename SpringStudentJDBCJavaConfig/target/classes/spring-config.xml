@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- <beans xmlns="http://www.springframework.org/schema/beans" -->
+<!-- xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop" -->
+<!-- xsi:schemaLocation="http://www.springframework.org/schema/beans -->
+<!-- http://www.springframework.org/schema/beans/spring-beans-4.0.xsd"> -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<bean id="student" class="com.lti.model.Student" scope="prototype">
+		<property name="rollNumber" value="1" />
+		<property name="studentName" value="Pooja" />
+		<property name="studentScore" value="83" />
+		<property name="address" ref="address" />
+	</bean>
+
+	<bean id="address" class="com.lti.model.Address" scope="prototype">
+		<property name="addressId" value="1" />
+		<property name="city" value="mumbai" />
+		<property name="pin" value="400040" />
+	</bean>
+	<bean id="service" class="com.lti.service.StudentServiceImpl"
+		scope="singleton" lazy-init="default">
+		<property name="dao" ref="dao" />
+	</bean>
+	<bean id="dao" class="com.lti.dao.StudentDaoJdbcImpl" scope="singleton"
+		lazy-init="default">
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
+	</bean>
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate"
+		scope="singleton" lazy-init="default">
+		<property name="dataSource" ref="datnoteaSource" />
+	</bean>
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource"
+		scope="singleton">
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
+		<property name="url" value="jdbc:oracle:thin:@localhost:1521:XE" />
+		<property name="username" value="hr" />
+		<property name="password" value="hr" />
+	</bean>
+</beans>
